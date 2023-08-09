@@ -1,0 +1,14 @@
+import 'package:flutter/material.dart';
+
+class OrdersPage extends StatelessWidget {
+  const OrdersPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder(
+      child: Center(
+        child: Text("Lista de compras!") 
+      ),
+    );
+  }
+}
