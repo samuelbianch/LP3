@@ -5,10 +5,13 @@ class UserProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder(
-      child: Center(
-        child: Text("Perfil do usuário!") 
-      ),
+    return const Column(
+      children: [
+        Text("Nome: Samuel Oliveira Silva Bianch"),
+        Text("Telefone: (65) 9 9907-3569"),
+        Text("Email: samuelbianch38@gmail.com"),
+        Text("Data Nascimento: 05/07/2002"),
+      ],
     );
   }
 }
