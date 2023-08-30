@@ -11,7 +11,8 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(35.0),
-        child: Column(
+        child: SingleChildScrollView(
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
@@ -184,6 +185,7 @@ class SignUpPage extends StatelessWidget {
               ],
             ),
           ],
+        ),
         ),
       ),
     );

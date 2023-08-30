@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecom/pages/mainpage.dart';
 import 'package:flutter_ecom/pages/signup_page.dart';
 import 'package:flutter_ecom/services/users_services.dart';
 
@@ -6,14 +7,16 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+  UsersServices _usersServices = UsersServices();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(35.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: SingleChildScrollView(
+          child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
               height: 45,
@@ -88,9 +91,14 @@ class LoginPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    UsersServices _usersServices = UsersServices();
-                    _usersServices.signIn(_email.text, _password.text);
-                    
+                    if(_usersServices.signIn(_email.text, _password.text)){
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(
+                          builder: (context) => MainPage()
+                          )
+                        );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                       elevation: 1.5,
@@ -178,6 +186,8 @@ class LoginPage extends StatelessWidget {
             ),
           ],
         ),
+
+        )
       ),
     );
   }
