@@ -1,0 +1,18 @@
+{
+  "name": "flutter_ecom",
+  "version": "1.0.0",
+  "description": "LP3",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Bianch",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^10.3.0"
+  }
+}
