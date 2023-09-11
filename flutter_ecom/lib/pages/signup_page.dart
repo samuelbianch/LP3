@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecom/pages/login/login_page.dart';
 import 'package:flutter_ecom/services/users_services.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -6,6 +7,7 @@ class SignUpPage extends StatelessWidget {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
   TextEditingController _userName = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +61,7 @@ class SignUpPage extends StatelessWidget {
               height: 10.0,
             ),
             TextFormField(
+              obscureText: true,
               controller: _password,
               decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.fingerprint),
@@ -101,14 +104,17 @@ class SignUpPage extends StatelessWidget {
                   height: 30,
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     UsersServices _usersServices = UsersServices();
-                    _usersServices.signUp(
+                    if (await _usersServices.signUp(
                       _email.text,
                       _password.text,
                       _userName.text,
-                    );
-                    Navigator.of(context).pop();
+                    )) {
+                      Navigator.of(context).pop();
+                    } else {
+                      debugPrint('Erro ao se conectar');
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                       elevation: 1.5,
@@ -166,19 +172,22 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(
                   height: 8.0,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text('Já tem uma conta?'),
-                    SizedBox(
+                    const Text('Já tem uma conta?'),
+                    const SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      'Login',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                          fontSize: 16),
+                    InkWell(
+                      onTap: () => Navigator.pushReplacementNamed(context, '/'),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontSize: 16),
+                      ),
                     ),
                   ],
                 ),

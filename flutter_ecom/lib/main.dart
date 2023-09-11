@@ -2,14 +2,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecom/pages/login/login_page.dart';
+import 'package:flutter_ecom/pages/mainpage.dart';
+import 'package:flutter_ecom/pages/signup_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var options = const FirebaseOptions(
-    apiKey: "AIzaSyCw3dssTp11bo7SrCprjaKBP8zZaLCKTv8",
-    projectId: "flutter-ecom-b5159",
-    messagingSenderId: "1085970376249",
-    appId: "1:1085970376249:web:88d6cc28e2f6d14586cfe8",
+    apiKey: "AIzaSyDtqc7QAOUWxwFDEmS28-tMnR8D8ITchMg",
+    authDomain: "flutter-lp3.firebaseapp.com",
+    projectId: "flutter-lp3",
+    storageBucket: "flutter-lp3.appspot.com",
+    messagingSenderId: "125950087820",
+    appId: "1:125950087820:web:991723730f1d4fb3f9e1a9",
+    measurementId: "G-0HVSN9N091"
   );
   if (kIsWeb) {
     await Firebase.initializeApp(options: options);
@@ -32,7 +37,12 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         colorSchemeSeed: Color(0xFF012B05),
       ),
-      home: LoginPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginPage(),
+        '/mainpage': (context) => const MainPage(),
+        '/signup':(context) => SignUpPage(),
+      },
     );
   }
 }
