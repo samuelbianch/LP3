@@ -6,20 +6,22 @@ import 'package:flutter/material.dart';
 class UsersServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Users? users;
+  Users? users = Users();
 
   DocumentReference get _firestoreRef => _firestore.doc('/users/${users!.id}');
   //método para registrar usuário no firebase
-  Future<bool> signUp(String email, String password, String userName) async {
+  Future<bool> signUp(Users users) async {
     try {
       User? user = (await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: users.email!,
+        password: users.password!,
       )).user;
 
-      users!.id = user!.uid;
-      users!.email = user.email;
-      users!.userName = userName;
+      this.users!.id = user!.uid;
+      this.users!.email = user.email;
+      this.users!.userName = users.userName!;
+      this.users!.birthday = users.birthday!;
+      this.users!.phone = users.phone!;
 
       saveUser();
       return true;
@@ -37,8 +39,14 @@ class UsersServices {
     }
   }
 
-  signIn(String email, String password) {
-    _auth.signInWithEmailAndPassword(email: email, password: password);
+  Future<bool> signIn(String email, String password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return true;
+    } on FirebaseAuthException catch (ex){
+      debugPrint("\n${ex.toString()}\n");
+    }
+    return false;
   }
 
   saveUser() {

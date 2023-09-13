@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecom/pages/login/login_page.dart';
 import 'package:flutter_ecom/services/users_services.dart';
 
+import '../models/users.dart';
+
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
-  TextEditingController _userName = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _birthday = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
   
   @override
   Widget build(BuildContext context) {
@@ -87,6 +91,34 @@ class SignUpPage extends StatelessWidget {
                   focusedBorder:
                       OutlineInputBorder(borderSide: BorderSide(width: 1.5))),
             ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            TextFormField(
+              controller: _birthday,
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.person_search_rounded),
+                  label: Text("Data de Nascimento"),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 1.3),
+                  ),
+                  focusedBorder:
+                      OutlineInputBorder(borderSide: BorderSide(width: 1.5))),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            TextFormField(
+              controller: _phone,
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.phone),
+                  label: Text("Telefone"),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 1.3),
+                  ),
+                  focusedBorder:
+                      OutlineInputBorder(borderSide: BorderSide(width: 1.5))),
+            ),
             Container(
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.only(top: 8.0),
@@ -106,11 +138,13 @@ class SignUpPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     UsersServices _usersServices = UsersServices();
-                    if (await _usersServices.signUp(
-                      _email.text,
-                      _password.text,
-                      _userName.text,
-                    )) {
+                    Users user = Users(
+                      email: _email.text, 
+                      password: _password.text, 
+                      userName: _userName.text, 
+                      birthday: _birthday.text, 
+                      phone: _phone.text);
+                    if (await _usersServices.signUp(user)) {
                       Navigator.of(context).pop();
                     } else {
                       debugPrint('Erro ao se conectar');

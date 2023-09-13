@@ -91,8 +91,8 @@ class LoginPage extends StatelessWidget {
                   height: 30,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    if(_usersServices.signIn(_email.text, _password.text)){
+                  onPressed: () async {
+                    if(await _usersServices.signIn(_email.text, _password.text)){
                       Navigator.push(
                         context, 
                         MaterialPageRoute(

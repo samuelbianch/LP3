@@ -6,14 +6,16 @@ class Users{
   String? userName;
   String? phone;
   String? birthday;
+  String? password;
 
-  Users(
+  Users({
     this.id,
     this.email,
     this.userName,
     this.phone,
     this.birthday,
-  );
+    this.password,
+  });
 
   //convert object to Json
 
