@@ -15,7 +15,8 @@ class UsersServices {
       User? user = (await _auth.createUserWithEmailAndPassword(
         email: users.email!,
         password: users.password!,
-      )).user;
+      ))
+          .user;
 
       this.users!.id = user!.uid;
       this.users!.email = user.email;
@@ -25,7 +26,7 @@ class UsersServices {
 
       saveUser();
       return true;
-    } on FirebaseAuthException catch(e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
         debugPrint('Email informado é inválido');
       } else if (e.code == 'weak-password') {
@@ -39,11 +40,29 @@ class UsersServices {
     }
   }
 
-  Future<bool> signIn(String email, String password) async {
+  Future<bool> signIn(
+      {String? email,
+      String? password,
+      Function? onSucess,
+      Function? onFail}) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(
+          email: email!, password: password!);
+      onSucess!();
       return true;
-    } on FirebaseAuthException catch (ex){
+    } on FirebaseAuthException catch (ex) {
+      String? erro;
+      if (ex.code == 'wrong-password') {
+        erro = "Senha incorreta!";
+      } else if (ex.code == 'invalid-email') {
+        erro = "E-mail inválido";
+      } else if (ex.code == 'user-not-found') {
+        erro = "Usuário não encontrado";
+      } else {
+        erro = ex.toString();
+      }
+
+      onFail!(erro);
       debugPrint("\n${ex.toString()}\n");
     }
     return false;
