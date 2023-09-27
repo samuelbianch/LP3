@@ -3,12 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_ecom/models/users.dart';
 import 'package:flutter/material.dart';
 
-class UsersServices {
+class UsersServices extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Users? users = Users();
 
   DocumentReference get _firestoreRef => _firestore.doc('/users/${users!.id}');
+
+  UsersServices() {
+    _loadingCurrentUser();
+  }
   //método para registrar usuário no firebase
   Future<bool> signUp(Users users) async {
     try {
@@ -46,9 +50,11 @@ class UsersServices {
       Function? onSucess,
       Function? onFail}) async {
     try {
-      await _auth.signInWithEmailAndPassword(
-          email: email!, password: password!);
+      User? user = (await _auth.signInWithEmailAndPassword(
+              email: email!, password: password!))
+          .user;
       onSucess!();
+      _loadingCurrentUser();
       return true;
     } on FirebaseAuthException catch (ex) {
       String? erro;
@@ -70,5 +76,15 @@ class UsersServices {
 
   saveUser() {
     _firestoreRef.set(users!.toJson());
+  }
+
+  _loadingCurrentUser({User? user}) async {
+    User? curretUser = user ?? _auth.currentUser;
+    if (curretUser != null) {
+      DocumentSnapshot docUser =
+          await _firestore.collection("users").doc(curretUser.uid).get();
+      users = Users.fromJson(docUser);
+      notifyListeners();
+    }
   }
 }

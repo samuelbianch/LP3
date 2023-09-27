@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecom/pages/login/login_page.dart';
 import 'package:flutter_ecom/pages/mainpage.dart';
 import 'package:flutter_ecom/pages/signup_page.dart';
+import 'package:flutter_ecom/services/users_services.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var options = const FirebaseOptions(
-    apiKey: "AIzaSyDtqc7QAOUWxwFDEmS28-tMnR8D8ITchMg",
-    authDomain: "flutter-lp3.firebaseapp.com",
-    projectId: "flutter-lp3",
-    storageBucket: "flutter-lp3.appspot.com",
-    messagingSenderId: "125950087820",
-    appId: "1:125950087820:web:991723730f1d4fb3f9e1a9",
-    measurementId: "G-0HVSN9N091"
-  );
+      apiKey: "AIzaSyDtqc7QAOUWxwFDEmS28-tMnR8D8ITchMg",
+      authDomain: "flutter-lp3.firebaseapp.com",
+      projectId: "flutter-lp3",
+      storageBucket: "flutter-lp3.appspot.com",
+      messagingSenderId: "125950087820",
+      appId: "1:125950087820:web:991723730f1d4fb3f9e1a9",
+      measurementId: "G-0HVSN9N091");
   if (kIsWeb) {
     await Firebase.initializeApp(options: options);
   } else {
@@ -30,19 +31,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        colorSchemeSeed: Color(0xFF012B05),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UsersServices(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          colorSchemeSeed: Color(0xFF012B05),
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => LoginPage(),
+          '/mainpage': (context) => const MainPage(),
+          '/signup': (context) => SignUpPage(),
+        },
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginPage(),
-        '/mainpage': (context) => const MainPage(),
-        '/signup':(context) => SignUpPage(),
-      },
     );
   }
 }

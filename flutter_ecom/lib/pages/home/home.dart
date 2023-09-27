@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Placeholder(
       child: Center(
-        child: Text("Página Inicial!") 
+        child: Text("Página Inicial!"),
       ),
     );
   }
