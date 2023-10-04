@@ -9,6 +9,7 @@ class Users {
   String? phone;
   String? birthday;
   String? password;
+  String? socialMedia;
 
   Users({
     this.id,
@@ -17,6 +18,7 @@ class Users {
     this.phone,
     this.birthday,
     this.password,
+    this.socialMedia,
   });
 
   //convert object to Json
@@ -28,6 +30,7 @@ class Users {
       'userName': userName,
       'phone': phone,
       'birthday': birthday,
+      'socialMedia': socialMedia,
     };
   }
 
@@ -37,5 +40,6 @@ class Users {
     email = doc.get('email');
     birthday = doc.get('birthday');
     phone = doc.get('phone');
+    socialMedia = doc.get('socialMedia');
   }
 }

@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecom/pages/login/login_page.dart';
 import 'package:flutter_ecom/pages/mainpage.dart';
 import 'package:flutter_ecom/pages/signup_page.dart';
+import 'package:flutter_ecom/pages/user_profile/user.dart';
+import 'package:flutter_ecom/pages/user_profile/user_profile_edit_page.dart';
 import 'package:flutter_ecom/services/users_services.dart';
 import 'package:provider/provider.dart';
+
+import 'commons/mypicked_image.dart';
+import 'models/users.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,22 +38,41 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => UsersServices(),
+        ChangeNotifierProvider<UsersServices>(
+          create: (_) => UsersServices(),
+          lazy: false,
         ),
+        ChangeNotifierProvider<MyPickedImage>(
+          create: (context) => MyPickedImage(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          colorSchemeSeed: Color(0xFF012B05),
+          colorSchemeSeed: Color.fromARGB(255, 1, 25, 3),
         ),
         initialRoute: '/',
         routes: {
           '/': (context) => LoginPage(),
           '/mainpage': (context) => const MainPage(),
-          '/signup': (context) => SignUpPage(),
+          '/userprofile': (context) => const UserProfilePage(),
+          '/userprofileedit': (context) => UserProfileEditPage(),
+        },
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/login':
+              return MaterialPageRoute(builder: (_) => LoginPage());
+            case '/mainpage':
+              return MaterialPageRoute(builder: (_) => const MainPage());
+            case '/userprofile':
+              return MaterialPageRoute(builder: (_) => const UserProfilePage());
+            case '/userprofileedit':
+              return MaterialPageRoute(
+                  builder: (_) =>
+                      UserProfileEditPage(users: settings.arguments as Users));
+          }
         },
       ),
     );
