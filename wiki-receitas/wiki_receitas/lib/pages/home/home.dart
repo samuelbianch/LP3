@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-//import 'package:wiki_receitas/pages/receita/receita.dart';
-//import 'package:wiki_receitas/services/receita/receita.dart';
-//import 'package:provider/provider.dart';
+import 'package:wiki_receitas/services/receita/receita.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key, this.title});
   final String? title;
-
   @override
   Widget build(BuildContext context) {
     //var items = context.watch<ReceitaService>().items;
@@ -15,6 +13,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title!),
       ),
+      body: const Text("Testando"),
     );
   }
 }
