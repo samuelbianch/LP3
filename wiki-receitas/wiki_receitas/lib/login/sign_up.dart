@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wiki_receitas/commons/custom_textformfield.dart';
 import 'package:wiki_receitas/commons/mypicked_image.dart';
 import 'package:wiki_receitas/models/users/users.dart';
@@ -37,7 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 35),
                 child: Image.asset(
-                  'assets/images/logo_flutter.png',
+                  'assets/images/logo.png',
                   height: 100,
                 ),
               ),
@@ -259,8 +260,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          'assets/images/google.png',
+                        SvgPicture.asset(
+                          'assets/images/google.svg',
                           height: 50,
                         ),
                         const SizedBox(
@@ -279,19 +280,24 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(
                     height: 8.0,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('Já tem uma conta?'),
-                      SizedBox(
+                      const Text('Já tem uma conta?'),
+                      const SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        'Login',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: 16),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/login');
+                        },
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: 16),
+                        ),
                       ),
                     ],
                   ),

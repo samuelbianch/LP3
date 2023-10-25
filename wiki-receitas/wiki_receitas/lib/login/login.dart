@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wiki_receitas/login/sign_up.dart';
 import 'package:wiki_receitas/services/users/users_services.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class LoginPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 35),
                 child: Image.asset(
-                  'assets/images/logo_flutter.png',
+                  'assets/images/logo.png',
                   height: 100,
                 ),
               ),
@@ -148,8 +149,8 @@ class LoginPage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              'assets/images/google.png',
+                            SvgPicture.asset(
+                              'assets/images/google.svg',
                               height: 50,
                             ),
                             const SizedBox(
