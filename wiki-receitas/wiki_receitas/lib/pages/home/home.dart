@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:wiki_receitas/services/receita/receita.dart';
@@ -21,47 +22,39 @@ class _HomePage extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Página Inicial"),
-      ),
-      body: SafeArea(
+    return Center(
+      child: Card(
+        color: Colors.white,
         child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed('/');
-          },
-          child: const Text("Bianch Receitas"),
+          onTap: () => '',
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      '/images/receita.png',
+                      height: MediaQuery.of(context).size.width * .6,
+                      width: MediaQuery.of(context).size.width * .95,
+                      fit: BoxFit.fill,
+                    ),
+                  )
+                ],
+              ),
+              const ListTile(
+                leading: Icon(Icons.food_bank),
+                title: Text('Título da receita'),
+                subtitle: Text('Aqui uma breve descrição'),
+              ),
+              const Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Text('Feito por: Samuel Bianch'),
+              ]),
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) {
-          debugPrint('Valor: $value');
-          if (value == 0) Navigator.of(context).pushNamed('/home');
-          if (value == 1) Navigator.of(context).pushNamed('/receitas');
-          if (value == 2) Navigator.of(context).pushNamed('/userprofile');
-          if (value == 3) Navigator.of(context).pushNamed('/login');
-        },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.food_bank),
-            label: 'Receitas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sign_language),
-            label: 'Entrar',
-          ),
-        ],
-        currentIndex: selectedIndex,
-        //onTap: _onItemTapped,
-        selectedItemColor: Colors.red,
       ),
     );
   }
