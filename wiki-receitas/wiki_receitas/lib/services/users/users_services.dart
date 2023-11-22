@@ -72,6 +72,7 @@ class UsersServices extends ChangeNotifier {
       } else if (e.code == 'user-disabled') {
         code = 'Já existe cadastro com este email!!';
       } else {
+        debugPrint(e.code);
         code = "Algum erro aconteceu na Plataforma do Firebase";
       }
       onFail!(code);

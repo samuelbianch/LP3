@@ -40,9 +40,9 @@ class Users {
     id = doc.id;
     userName = doc.get('userName');
     email = doc.get('email');
-    phone = doc.get('phone');
-    socialMedia = doc.get('socialMedia');
-    birthday = doc.get('birthday');
-    image = doc.get('image');
+    phone = doc.get('phone') ?? '';
+    socialMedia = doc.get('socialMedia') ?? '';
+    birthday = doc.get('birthday') ?? '';
+    image = doc.get('image') ?? '';
   }
 }
