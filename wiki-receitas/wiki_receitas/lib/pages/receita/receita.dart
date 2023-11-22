@@ -1,37 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:wiki_receitas/models/receita/receita.dart';
 import 'package:wiki_receitas/services/receita/receita.dart';
 import 'package:provider/provider.dart';
 
-class CartPage extends StatefulWidget {
-  CartPage();
+class ReceitaPage extends StatefulWidget {
+  ReceitaPage({super.key});
 
   @override
-  _CartPageState createState() => _CartPageState();
+  State<ReceitaPage> createState() => _ReceitaPage();
 }
 
-class _CartPageState extends State<CartPage> {
+class _ReceitaPage extends State<ReceitaPage> {
   @override
   Widget build(BuildContext context) {
-    var cart = context.watch<ReceitaService>().cart;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Your cart (${cart.length})"),
+        title: const Text("Receitas"),
       ),
-      body: ListView(
-        children: cart
-            .map(
-              (e) => ListTile(
-                title: Text(e.nome ?? ''),
-                subtitle: Text("USD " + (e.modoDePreparo ?? '')),
-                trailing: IconButton(
-                  icon: Icon(Icons.remove_circle),
-                  onPressed: () {
-                    context.read<ReceitaService>().removeFromCart(e);
-                  },
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Consumer<ReceitaService>(
+          builder: (context, value, child) {
+            return Container(
+              child: ListView(
+                children: value.cart
+                    .map(
+                      (e) => ListTile(
+                        title: Text(e.nome ?? ''),
+                        subtitle: Text("USD " + (e.modoDePreparo ?? '')),
+                        trailing: IconButton(
+                          icon: Icon(Icons.remove_circle),
+                          onPressed: () {
+                            context.read<ReceitaService>().removeFromCart(e);
+                          },
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
-            )
-            .toList(),
+            );
+          },
+        ),
       ),
     );
   }

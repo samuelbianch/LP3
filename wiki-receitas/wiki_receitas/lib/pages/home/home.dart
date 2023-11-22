@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:wiki_receitas/login/login.dart';
+import 'package:wiki_receitas/pages/receita/receita.dart';
+import 'package:wiki_receitas/pages/userprofile/userprofile.dart';
 import 'package:wiki_receitas/services/receita/receita.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +30,8 @@ class _HomePage extends State<HomePage> {
         child: Card(
           color: Colors.white,
           child: InkWell(
-            onTap: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => LoginPage())),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => UserProfilePage())),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[

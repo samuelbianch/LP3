@@ -5,6 +5,8 @@ import 'package:wiki_receitas/login/login.dart';
 import 'package:wiki_receitas/pages/home/home.dart';
 import 'package:wiki_receitas/pages/main/main_page.dart';
 import 'package:wiki_receitas/login/sign_up.dart';
+import 'package:wiki_receitas/pages/receita/create_receita.dart';
+import 'package:wiki_receitas/pages/receita/receita.dart';
 import 'package:wiki_receitas/pages/userprofile/userprofile.dart';
 import 'package:wiki_receitas/pages/userprofile/user_profile_edit_page.dart';
 import 'package:wiki_receitas/services/users/users_services.dart';
@@ -61,6 +63,8 @@ class MyApp extends StatelessWidget {
           '/userprofile': (context) => const UserProfilePage(),
           '/userprofileedit': (context) => UserProfileEditPage(),
           '/signup': (context) => const SignUpPage(),
+          '/receita': (context) => ReceitaPage(),
+          '/receita/add': (context) => const CreateReceitaPage()
         },
         onGenerateRoute: (settings) {
           switch (settings.name) {
@@ -74,6 +78,11 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => const UserProfilePage());
             case '/signup':
               return MaterialPageRoute(builder: (_) => const SignUpPage());
+            case '/receita':
+              return MaterialPageRoute(builder: (_) => ReceitaPage());
+            case '/receita/add':
+              return MaterialPageRoute(
+                  builder: (_) => const CreateReceitaPage());
             case '/userprofileedit':
               return MaterialPageRoute(
                   builder: (_) =>

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wiki_receitas/pages/home/home.dart';
+import 'package:wiki_receitas/pages/receita_favorita/receitas_favoritas.dart';
 import 'package:wiki_receitas/pages/userprofile/userprofile.dart';
 
 class MainPage extends StatefulWidget {
@@ -17,34 +19,12 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         // backgroundColor: ,
         elevation: 2.0,
-        title: const Text("Flutter Ecom"),
+        title: const Text("Wiki Receitas"),
       ),
       body: [
-        const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("Página inicial")],
-          ),
-        ),
-        const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Carrinho de Compras'),
-            ],
-          ),
-        ),
-        Center(
-          child: Container(
-            color: Colors.orange,
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Galeria de Produtos'),
-              ],
-            ),
-          ),
-        ),
+        const HomePage(),
+        ReceitasFavoritasPage(),
+        const HomePage(),
         const UserProfilePage(),
       ][_index],
       bottomNavigationBar: NavigationBar(
@@ -60,12 +40,12 @@ class _MainPageState extends State<MainPage> {
               label: 'Home',
             ),
             NavigationDestination(
-              icon: Icon(Icons.shopping_cart_outlined),
-              label: 'Carrinho',
+              icon: Icon(Icons.favorite_border_outlined),
+              label: 'Receitas Favoritas',
             ),
             NavigationDestination(
-              icon: Icon(Icons.line_style_outlined),
-              label: 'Pedidos',
+              icon: Icon(Icons.food_bank_outlined),
+              label: 'Minhas Receitas',
             ),
             NavigationDestination(
               icon: Icon(Icons.account_box_outlined),

@@ -31,8 +31,9 @@ class UsersServices extends ChangeNotifier {
       this.users!.birthday = users.birthday;
       this.users!.phone = users.phone;
       this.users!.socialMedia = users.socialMedia;
-      saveUserDetails();
-      _uploadImage(imageFile, plat);
+      await saveUserDetails();
+      await _uploadImage(imageFile, plat);
+      await _firestore.collection('users').doc(user.uid).set(users.toJson());
       return Future.value(true);
     } on FirebaseAuthException catch (error) {
       if (error.code == 'invalid-email') {
