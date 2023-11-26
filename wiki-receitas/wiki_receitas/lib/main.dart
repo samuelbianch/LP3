@@ -57,8 +57,8 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => const HomePage(),
-          '/login': (context) => LoginPage(),
+          '/': (context) => LoginPage(),
+          '/home': (context) => const HomePage(),
           '/mainpage': (context) => MainPage(),
           '/userprofile': (context) => const UserProfilePage(),
           '/userprofileedit': (context) => UserProfileEditPage(),
@@ -69,9 +69,9 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/':
-              return MaterialPageRoute(builder: (_) => const HomePage());
-            case '/login':
               return MaterialPageRoute(builder: (_) => LoginPage());
+            case '/home':
+              return MaterialPageRoute(builder: (_) => const HomePage());
             case '/mainpage':
               return MaterialPageRoute(builder: (_) => MainPage());
             case '/userprofile':

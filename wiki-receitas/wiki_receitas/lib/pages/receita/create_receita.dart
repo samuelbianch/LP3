@@ -1,13 +1,11 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wiki_receitas/commons/custom_textformfield.dart';
 import 'package:wiki_receitas/commons/mypicked_image.dart';
 import 'package:wiki_receitas/models/receita/receita.dart';
-import 'package:wiki_receitas/models/users/users.dart';
 import 'package:wiki_receitas/services/receita/receita.dart';
-import 'package:wiki_receitas/services/users/users_services.dart';
 import 'package:provider/provider.dart';
 
 class CreateReceitaPage extends StatefulWidget {
@@ -21,10 +19,9 @@ class _CreateReceitaPageState extends State<CreateReceitaPage> {
   final TextEditingController _nomeReceita = TextEditingController();
   final TextEditingController _tipoReceita = TextEditingController();
   final TextEditingController _tempoDePreparo = TextEditingController();
-  final TextEditingController _user = TextEditingController();
-  final TextEditingController _dataCriacao = TextEditingController();
   final TextEditingController _modoPreparo = TextEditingController();
   final TextEditingController _ingredientes = TextEditingController();
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -165,14 +162,12 @@ class _CreateReceitaPageState extends State<CreateReceitaPage> {
                           receita.ingredientes = _ingredientes.text;
                           receita.modoDePreparo = _modoPreparo.text;
                           receita.tempoDePreparo = _tempoDePreparo.text;
+                          receita.tipoReceita = _tipoReceita.text;
                           receita.dataCriacao = DateTime.now();
+                          receita.userID = auth.currentUser!.uid;
+                          receita.imagem = myPickedImage.pickImage!.path;
 
-                          if (await receitaService.create(
-                              users,
-                              kIsWeb
-                                  ? myPickedImage.webImage
-                                  : myPickedImage.pickImage,
-                              kIsWeb)) {
+                          if (await receitaService.create(receita)) {
                             if (context.mounted) Navigator.of(context).pop();
                           } else {
                             if (context.mounted) {

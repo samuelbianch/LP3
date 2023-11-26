@@ -31,7 +31,7 @@ class _HomePage extends State<HomePage> {
           color: Colors.white,
           child: InkWell(
             onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => UserProfilePage())),
+                MaterialPageRoute(builder: (context) => ReceitaPage())),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
