@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wiki_receitas/models/receita/receita.dart';
 
 class ReceitaService with ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   Receita? receita;
   DocumentReference get _firestoreRef =>
-      _firestore.doc('receitas/${_auth.currentUser!.uid}');
+      _firestore.doc('receitas/${const Uuid().v1()}');
   CollectionReference get _collectionRef => _firestore.collection('receitas');
 
   late final List<Receita> _items = getItems();
