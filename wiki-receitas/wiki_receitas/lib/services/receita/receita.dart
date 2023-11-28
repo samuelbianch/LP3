@@ -16,6 +16,8 @@ class ReceitaService with ChangeNotifier {
 
   List<Receita> get items => _items;
 
+  ReceitaService();
+
   List<Receita> get cart => _cart;
 
   void addToCart(Receita item) {
@@ -39,6 +41,48 @@ class ReceitaService with ChangeNotifier {
     } on FirebaseException catch (error) {
       debugPrint(error.message);
       return Future.value(false);
+    }
+  }
+
+  Future<Receita> getReceitaById(String id) async {
+    try {
+      DocumentSnapshot docReceita =
+          await _firestore.collection('receitas').doc(id).get();
+      return Future.value(Receita.fromJson(docReceita));
+    } on FirebaseException catch (error) {
+      debugPrint("Erro ao buscar receita pelo ID: ${error.message}");
+      throw ();
+    }
+  }
+
+  Future<Stream<List<Receita>>> getReceitas() async {
+    try {
+      Stream<QuerySnapshot<Map<String, dynamic>>> snaphot =
+          _firestore.collection('receitas').snapshots();
+
+      Stream<List<Receita>> dataStream = snaphot.map(
+          (list) => list.docs.map((doc) => Receita.fromJson(doc)).toList());
+
+      return Future.value(dataStream);
+    } on FirebaseException catch (error) {
+      debugPrint("Erro ao buscar receitas: ${error.message}");
+      throw ();
+    }
+  }
+
+  Stream<List<Receita>> getReceitasByUserID(String userID) {
+    try {
+      var receitas = _firestore
+          .collection('receitas')
+          .where('userID', isEqualTo: userID)
+          .snapshots();
+
+      Stream<List<Receita>> listaReceita = receitas.map((event) =>
+          event.docs.map((receita) => Receita.fromJson(receita)).toList());
+      return listaReceita;
+    } on FirebaseException catch (error) {
+      debugPrint("Erro ao buscar receitas: ${error.message}");
+      throw ();
     }
   }
 }
