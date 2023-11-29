@@ -31,12 +31,14 @@ class ReceitaService with ChangeNotifier {
   }
 
   List<Receita> getItems() {
+    notifyListeners();
     return receita!.getItems();
   }
 
   Future<bool> create(Receita receitas) async {
     try {
       await _firestoreRef.set(receitas.toJson());
+      notifyListeners();
       return Future.value(true);
     } on FirebaseException catch (error) {
       debugPrint(error.message);
@@ -48,6 +50,7 @@ class ReceitaService with ChangeNotifier {
     try {
       DocumentSnapshot docReceita =
           await _firestore.collection('receitas').doc(id).get();
+      notifyListeners();
       return Future.value(Receita.fromJson(docReceita));
     } on FirebaseException catch (error) {
       debugPrint("Erro ao buscar receita pelo ID: ${error.message}");
@@ -62,7 +65,7 @@ class ReceitaService with ChangeNotifier {
 
       Stream<List<Receita>> dataStream = snaphot.map(
           (list) => list.docs.map((doc) => Receita.fromJson(doc)).toList());
-
+      notifyListeners();
       return Future.value(dataStream);
     } on FirebaseException catch (error) {
       debugPrint("Erro ao buscar receitas: ${error.message}");
@@ -79,6 +82,7 @@ class ReceitaService with ChangeNotifier {
 
       Stream<List<Receita>> listaReceita = receitas.map((event) =>
           event.docs.map((receita) => Receita.fromJson(receita)).toList());
+      notifyListeners();
       return listaReceita;
     } on FirebaseException catch (error) {
       debugPrint("Erro ao buscar receitas: ${error.message}");
