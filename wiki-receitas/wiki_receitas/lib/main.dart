@@ -6,6 +6,7 @@ import 'package:wiki_receitas/pages/home/home.dart';
 import 'package:wiki_receitas/pages/main/main_page.dart';
 import 'package:wiki_receitas/login/sign_up.dart';
 import 'package:wiki_receitas/pages/receita/create_receita.dart';
+import 'package:wiki_receitas/pages/receita/edita_receita.dart';
 import 'package:wiki_receitas/pages/receita/minhas_receitas.dart';
 import 'package:wiki_receitas/pages/receita/receita.dart';
 import 'package:wiki_receitas/pages/userprofile/userprofile.dart';
@@ -36,6 +37,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  get receitaID => null;
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -60,13 +63,14 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => LoginPage(),
           '/home': (context) => const HomePage(),
-          '/mainpage': (context) => MainPage(),
+          '/mainpage': (context) => const MainPage(),
           '/userprofile': (context) => const UserProfilePage(),
-          '/userprofileedit': (context) => UserProfileEditPage(),
+          '/userprofileedit': (context) => const UserProfileEditPage(),
           '/signup': (context) => const SignUpPage(),
-          '/receita': (context) => ReceitaPage(),
+          '/receita': (context) => const ReceitaPage(),
           '/receita/add': (context) => const CreateReceitaPage(),
-          '/minhasreceitas': (context) => MinhasReceitasPage(),
+          '/minhasreceitas': (context) => const MinhasReceitasPage(),
+          '/receita/edit': (context) => EditaReceitaPage()
         },
         onGenerateRoute: (settings) {
           switch (settings.name) {
@@ -75,23 +79,27 @@ class MyApp extends StatelessWidget {
             case '/home':
               return MaterialPageRoute(builder: (_) => const HomePage());
             case '/mainpage':
-              return MaterialPageRoute(builder: (_) => MainPage());
+              return MaterialPageRoute(builder: (_) => const MainPage());
             case '/userprofile':
               return MaterialPageRoute(builder: (_) => const UserProfilePage());
             case '/signup':
               return MaterialPageRoute(builder: (_) => const SignUpPage());
             case '/receita':
-              return MaterialPageRoute(builder: (_) => ReceitaPage());
+              return MaterialPageRoute(builder: (_) => const ReceitaPage());
             case '/minhasreceitas':
-              return MaterialPageRoute(builder: (_) => MinhasReceitasPage());
+              return MaterialPageRoute(
+                  builder: (_) => const MinhasReceitasPage());
             case '/receita/add':
               return MaterialPageRoute(
                   builder: (_) => const CreateReceitaPage());
+            case '/receita/edit':
+              return MaterialPageRoute(builder: (_) => EditaReceitaPage());
             case '/userprofileedit':
               return MaterialPageRoute(
                   builder: (_) =>
                       UserProfileEditPage(users: settings.arguments as Users));
           }
+          return null;
         },
       ),
     );

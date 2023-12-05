@@ -5,7 +5,7 @@ import 'package:wiki_receitas/pages/receita_favorita/receitas_favoritas.dart';
 import 'package:wiki_receitas/pages/userprofile/userprofile.dart';
 
 class MainPage extends StatefulWidget {
-  MainPage({super.key});
+  const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -24,8 +24,8 @@ class _MainPageState extends State<MainPage> {
       ),
       body: [
         const HomePage(),
-        ReceitasFavoritasPage(),
-        MinhasReceitasPage(),
+        const ReceitasFavoritasPage(),
+        const MinhasReceitasPage(),
         const UserProfilePage(),
       ][_index],
       bottomNavigationBar: NavigationBar(

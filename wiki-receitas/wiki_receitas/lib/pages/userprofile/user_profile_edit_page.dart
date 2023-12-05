@@ -7,13 +7,13 @@ import 'package:wiki_receitas/services/users/users_services.dart';
 import 'package:provider/provider.dart';
 
 class UserProfileEditPage extends StatelessWidget {
-  UserProfileEditPage({this.users});
+  const UserProfileEditPage({super.key, this.users});
   final Users? users;
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    final CollectionReference _collectionRef = _firestore.collection('users');
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final CollectionReference collectionRef = firestore.collection('users');
     final TextEditingController userName = TextEditingController();
     final TextEditingController telefone = TextEditingController();
     final TextEditingController socialMedia = TextEditingController();
@@ -122,7 +122,7 @@ class UserProfileEditPage extends StatelessWidget {
                 TextButton(
                   onPressed: () async {
                     DocumentReference docRef =
-                        _collectionRef.doc(usersServices.users!.id);
+                        collectionRef.doc(usersServices.users!.id);
                     FirebaseAuth auth = FirebaseAuth.instance;
                     await docRef.update({
                       'userName': userName.text,

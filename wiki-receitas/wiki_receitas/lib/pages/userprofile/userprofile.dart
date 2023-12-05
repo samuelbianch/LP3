@@ -1,7 +1,5 @@
-import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:wiki_receitas/pages/home/home.dart';
 import 'package:wiki_receitas/pages/receita/create_receita.dart';
 import 'package:wiki_receitas/services/users/users_services.dart';
 import 'package:provider/provider.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReceitasFavoritasPage extends StatefulWidget {
-  ReceitasFavoritasPage({super.key});
+  const ReceitasFavoritasPage({super.key});
 
   @override
   State<ReceitasFavoritasPage> createState() => _ReceitasFavoritasPage();

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -100,7 +101,19 @@ class ReceitaService with ChangeNotifier {
   }
 
   Stream<QuerySnapshot> getReceitaById(String receitaID) {
-    return _collectionReference.where('id', isEqualTo: receitaID).snapshots();
+    var receita =
+        _collectionReference.where('id', isEqualTo: receitaID).snapshots();
+    return receita;
+  }
+
+  Future<bool> update(String uid, Receita receita, bool plat) async {
+    try {
+      DocumentReference docRef = _collectionRef.doc(uid);
+      await docRef.update(receita.toJson());
+      return Future.value(true);
+    } on FirebaseFirestore catch (error) {
+      return Future.value(false);
+    }
   }
 
   _uploadImage(String uid, String userID, dynamic imageFile, bool plat) async {
