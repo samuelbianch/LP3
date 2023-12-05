@@ -165,9 +165,13 @@ class _CreateReceitaPageState extends State<CreateReceitaPage> {
                           receita.tipoReceita = _tipoReceita.text;
                           receita.dataCriacao = DateTime.now();
                           receita.userID = auth.currentUser!.uid;
-                          receita.imagem = myPickedImage.pickImage!.path;
 
-                          if (await receitaService.create(receita)) {
+                          if (await receitaService.create(
+                              receita,
+                              kIsWeb
+                                  ? myPickedImage.webImage
+                                  : myPickedImage.pickImage,
+                              kIsWeb)) {
                             if (context.mounted) Navigator.of(context).pop();
                           } else {
                             if (context.mounted) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wiki_receitas/pages/home/home.dart';
+import 'package:wiki_receitas/pages/receita/minhas_receitas.dart';
 import 'package:wiki_receitas/pages/receita_favorita/receitas_favoritas.dart';
 import 'package:wiki_receitas/pages/userprofile/userprofile.dart';
 
@@ -24,7 +25,7 @@ class _MainPageState extends State<MainPage> {
       body: [
         const HomePage(),
         ReceitasFavoritasPage(),
-        const HomePage(),
+        MinhasReceitasPage(),
         const UserProfilePage(),
       ][_index],
       bottomNavigationBar: NavigationBar(

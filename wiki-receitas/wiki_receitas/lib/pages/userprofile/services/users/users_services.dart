@@ -10,6 +10,7 @@ class UsersServices extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
   Users? users;
+  String urlImage = "";
 
   DocumentReference get _firetoreRef => _firestore.doc('users/${users!.id}');
   CollectionReference get _collectionRef => _firestore.collection('users');
@@ -24,16 +25,16 @@ class UsersServices extends ChangeNotifier {
       User? user = (await _auth.createUserWithEmailAndPassword(
               email: users.email!, password: users.password!))
           .user;
-
+      await _auth.currentUser?.updateDisplayName(users.userName);
       this.users!.id = user!.uid;
       this.users!.email = users.email;
       this.users!.userName = users.userName;
       this.users!.birthday = users.birthday;
       this.users!.phone = users.phone;
       this.users!.socialMedia = users.socialMedia;
-      await saveUserDetails();
-      await _uploadImage(imageFile, plat);
-      await _firestore.collection('users').doc(user.uid).set(users.toJson());
+      saveUserDetails();
+      _uploadImage(imageFile, plat);
+      //this.users!.image = urlImage;
       return Future.value(true);
     } on FirebaseAuthException catch (error) {
       if (error.code == 'invalid-email') {
@@ -116,7 +117,7 @@ class UsersServices extends ChangeNotifier {
                 customMetadata: {
                   'upload by': users!.userName!,
                   'description': 'Informação de arquivo',
-                  'imageName': imageFile
+                  'imageName': imageFile.toString()
                 },
               ),
             );
@@ -126,12 +127,13 @@ class UsersServices extends ChangeNotifier {
               SettableMetadata(contentType: 'image/jpg', customMetadata: {
                 'upload by': users!.userName!,
                 'description': 'Informação de arquivo',
-                // 'imageName': File(imageFile).
+                'imageName': imageFile.toString()
               }),
             );
       }
       //procedimento para persistir a imagem no banco de dados firebase
       String url = await (await task.whenComplete(() {})).ref.getDownloadURL();
+      //urlImage = url;
       DocumentReference docRef = _collectionRef.doc(users!.id);
       await docRef.update({'image': url});
     } on FirebaseException catch (e) {
